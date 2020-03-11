@@ -59,8 +59,18 @@ public class GameController {
             String[] commandChunks = command.substring(1).split(" ");
             switch(commandChunks[0]){
                 case "AIgame" :
+                    int pNum = Integer.parseInt(commandChunks[1]);
+                    
                     try{
-                        startAiGame(Player.genPlayer(), Player.genPlayer(), Integer.parseInt(commandChunks[1]));
+                        if(commandChunks[2] != null){
+                            if(commandChunks[3] != null){
+                                startAiGame(Player.genPlayerFromString(commandChunks[2]), Player.genPlayerFromString(commandChunks[3]), pNum);
+                            } else{
+                                startAiGame(Player.genPlayerFromString(commandChunks[2]), Player.genPlayer(), pNum);
+                            }
+                        } else {
+                        startAiGame(Player.genPlayer(), Player.genPlayer(), pNum);
+                        }
                     } catch (Exception e) {
                         System.out.println("Invalid argument. Error = " + e);
                     }
@@ -78,8 +88,8 @@ public class GameController {
     }
     
     static void printCommandList(){
-        System.out.println("Commands (stuff within [brackets] is a parameter for the command. Prefix is \'!\'):");
-        System.out.println("1. AIgame [int rounds]");
+        System.out.println("Commands (stuff within [brackets] is a parameter for the command. Stuff between (parentheses) is optional Prefix is \'!\'):");
+        System.out.println("1. AIgame [int rounds] (player one type) (player two type)");
         System.out.println("Starts a game between two non player characters that lasts for the inputted number of rounds.");
     }
 }
